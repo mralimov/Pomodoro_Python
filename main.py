@@ -49,3 +49,22 @@ def start_timer():
     else:
         count_down(work_sec)
         title_label.config(text="Work", fg=GREEN)
+
+# ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
+
+
+def count_down(count):
+    count_min = math.floor(count / 60)
+    count_second = count % 60
+    if count_second < 10:
+        count_second = f"0{count_second}"
+    canvas.itemconfig(timer_text, text=f"{count_min}:{count_second}")
+    if count > 0:
+        global timer
+        timer = window.after(1000, count_down, count - 1)
+    else:
+        start_timer()
+        marking = ""
+        for _ in range(math.floor(reps/2)):
+            marking += "✔"
+        check_marks.config(text=marking)
